@@ -406,7 +406,7 @@
 
 <body class="antialiased">
 
-    <h2 style="margin: 40px">Welcome to Home Page</h2>
+    <h2 style="margin: 40px">Welcome to About Page</h2>
 
 </body>
 
