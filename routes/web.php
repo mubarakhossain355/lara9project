@@ -21,8 +21,9 @@ Route::get('/about-page', function () {
     return view('about');
 })->name('about');
 
-Route::get('/service', function () {
-    return view('service');
+Route::get('/service/{service_id}/{service_name?}', function ($service_id, $service_name = null) {
+    return 'Service' . $service_id . $service_name;
+    //return view('service');
 })->name('service');
 Route::get('/contact', function () {
     return view('contact');
