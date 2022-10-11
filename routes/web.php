@@ -14,19 +14,36 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home', [
+        'page_name' => 'Home Page',
+        'name' => 'Laravel 9 Course',
+    ]);
 })->name('home');
 
 Route::get('/about-page', function () {
-    return view('about');
+    return view('about', [
+        'page_name' => 'About Page',
+        'name' => 'Laravel 9 Course',
+    ]);
 })->name('about');
 
-Route::get('/service/{service_id}/{service_name?}', function ($service_id, $service_name = null) {
-    return 'Service' . $service_id . $service_name;
-    //return view('service');
+Route::get('/service-page', function () {
+    $services = [
+        'Web Design',
+        'Web Development',
+        'App Development',
+        'Graphics Design',
+    ];
+    return view('service', compact('services'));
 })->name('service');
+// Route::get('/service/{service_id}/{service_name?}', function ($service_id, $service_name = null) {
+//     return 'Service' . $service_id . $service_name;
+//return view('service');
+// })->name('service');
 Route::get('/contact', function () {
-    return view('contact');
+    $page_name = 'Contact Page';
+    $mobile = '01938447680';
+    return view('contact', compact('page_name', 'mobile'));
 })->name('contact');
 
 Route::get('/user/{id}/{name}', function ($id, $name) {
@@ -36,3 +53,7 @@ Route::get('/user/{id}/{name}', function ($id, $name) {
 Route::get('/category/{category_name}', function ($category_name) {
     echo $category_name;
 })->whereIn('category_name', ['electronics', 'movie', 'books', 'laptop']);
+
+Route::get('search/{keywords}', function ($keywords) {
+    echo $keywords;
+})->where('keywords', '.*');
