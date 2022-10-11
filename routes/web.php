@@ -42,8 +42,22 @@ Route::get('/service-page', function () {
 // })->name('service');
 Route::get('/contact', function () {
     $page_name = 'Contact Page';
-    $mobile = '01938447680';
-    return view('contact', compact('page_name', 'mobile'));
+    $products = [
+        1 => [
+            'name' => 'Bag',
+            'color' => 'black',
+            'price' => '1200',
+        ],
+        2 => [
+            'name' => 'Sunglass',
+            'color' => 'black',
+            'price' => '700',
+        ],
+    ];
+    $product_count = 14;
+    $color = 'red';
+
+    return view('contact', compact('page_name', 'product_count', 'color', 'products'));
 })->name('contact');
 
 Route::get('/user/{id}/{name}', function ($id, $name) {
