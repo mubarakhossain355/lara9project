@@ -99,3 +99,7 @@ Route::get('/category/{category_name}', function ($category_name) {
 Route::get('search/{keywords}', function ($keywords) {
     echo $keywords;
 })->where('keywords', '.*');
+
+Route::get('/course-content/download', function () {
+    return response()->download(public_path('/course_content.pdf'), "Laravel 9 masterclass course content.pdf");
+});
