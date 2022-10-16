@@ -103,3 +103,21 @@ Route::get('search/{keywords}', function ($keywords) {
 Route::get('/course-content/download', function () {
     return response()->download(public_path('/course_content.pdf'), "Laravel 9 masterclass course content.pdf");
 });
+
+Route::prefix('page')->name('laravel.')->group(function () {
+    Route::get('/home', function () {
+        return view('home');
+    })->name('home');
+
+    Route::get('/contact', function () {
+        return view('contact');
+    })->name('contact');
+
+    Route::get('/about', function () {
+        return view('about');
+    })->name('about');
+
+    Route::get('/service', function () {
+        return view('service');
+    })->name('service');
+});
