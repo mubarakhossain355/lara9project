@@ -15,20 +15,27 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::get('/', function (Request $request) {
-    dd(
-        $request->path(), // path name
-        $request->is('/'),
-        $request->fullUrl(),
-        $request->host(),
-        $request->httpHost(),
-        $request->routeIs('home'),
-        $request->bearerToken(),
-        $request->ip(),
-    );
-    return view('home', [
+    // dd(
+    //     $request->path(), // path name
+    //     $request->is('/'),
+    //     $request->fullUrl(),
+    //     $request->host(),
+    //     $request->httpHost(),
+    //     $request->routeIs('home'),
+    //     $request->bearerToken(),
+    //     $request->ip(),
+    // );
+    $data = [
         'page_name' => 'Home Page',
         'name' => 'Laravel 9 Course',
-    ]);
+    ];
+    return response($data)
+        ->header('Content-type', 'application/json')
+        ->cookie('My_ID_Card', 'Mubarak Khilji', 3600);
+    // return view('home', [
+    //     'page_name' => 'Home Page',
+    //     'name' => 'Laravel 9 Course',
+    // ]);
 })->name('home');
 
 Route::get('/about-page', function () {
