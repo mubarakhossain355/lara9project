@@ -25,17 +25,17 @@ Route::get('/', function (Request $request) {
     //     $request->bearerToken(),
     //     $request->ip(),
     // );
-    $data = [
-        'page_name' => 'Home Page',
-        'name' => 'Laravel 9 Course',
-    ];
-    return response($data)
-        ->header('Content-type', 'application/json')
-        ->cookie('My_ID_Card', 'Mubarak Khilji', 3600);
-    // return view('home', [
+    // $data = [
     //     'page_name' => 'Home Page',
     //     'name' => 'Laravel 9 Course',
-    // ]);
+    // ];
+    // return response($data)
+    //     ->header('Content-type', 'application/json')
+    //     ->cookie('My_ID_Card', 'Mubarak Khilji', 3600);
+    return view('home', [
+        'page_name' => 'Home Page',
+        'name' => 'Laravel 9 Course',
+    ]);
 })->name('home');
 
 Route::get('/about-page', function () {
@@ -72,10 +72,20 @@ Route::get('/contact', function () {
             'price' => '700',
         ],
     ];
-    $product_count = 14;
+    $product_count = count($products);
     $color = 'red';
 
-    return view('contact', compact('page_name', 'product_count', 'color', 'products'));
+    return response()->json([
+
+        'products' => $products,
+        'products_count' => $product_count,
+    ], 200)->header('Content-type', 'application/json')
+        ->cookie('My_ID_Card', 'Mubarak Khilji', 3600);
+    // return view('contact', compact(
+    //     'page_name',
+    //     'product_count',
+    //     'color',
+    //      'products'));
 })->name('contact');
 
 Route::get('/user/{id}/{name}', function ($id, $name) {
