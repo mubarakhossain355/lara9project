@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::get('/', function (Request $request) {
+    //dd($request->all());
     // dd(
     //     $request->path(), // path name
     //     $request->is('/'),
@@ -36,8 +37,10 @@ Route::get('/', function (Request $request) {
         'page_name' => 'Home Page',
         'name' => 'Laravel 9 Course',
     ]);
-})->name('home');
-
+})->name('home'); //->middleware('auth');
+Route::get('/login', function () {
+    return "login";
+})->name('login');
 Route::get('/about-page', function () {
     return view('about', [
         'page_name' => 'About Page',
@@ -102,6 +105,27 @@ Route::get('search/{keywords}', function ($keywords) {
 
 Route::get('/course-content/download', function () {
     return response()->download(public_path('/course_content.pdf'), "Laravel 9 masterclass course content.pdf");
+});
+
+Route::get('/send-me-details', function (Request $request) {
+    $secret_key = 123321;
+    $user_key = $request->user_key;
+
+    $data = [
+        'username' => 'Mubarak Khilji',
+        'designation' => 'Full stack web developer',
+        'mobile' => '01938447680',
+        'BankAcc' => 'b12344321',
+    ];
+    if ($secret_key == $user_key) {
+        return response()->json([
+            'user_info' => $data,
+        ]);
+    } else {
+        return response([
+            'message' => 'Provide valid secret key',
+        ]);
+    }
 });
 
 Route::prefix('page')->name('laravel.')->group(function () {
