@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryStoreRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -39,9 +41,10 @@ class CategoryController extends Controller
 
         Category::create([
             'name' => $request->category_name,
-            'slug' => $request->category_slug,
+            'slug' => Str::slug($request->category_name),
             'is_active' => $request->filled('is_active'),
         ]);
+        Session::flash('status', 'Category Successfully Created');
         return back();
     }
 
