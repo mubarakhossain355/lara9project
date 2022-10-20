@@ -39,7 +39,7 @@ class CategoryController extends Controller
             'category_name' => 'required|string|alpha',
             'category_slug' => 'required|string|alpha',
         ]);
-        dd($request->all());
+
         Category::create([
             'name' => $request->category_name,
             'slug' => $request->category_slug,
