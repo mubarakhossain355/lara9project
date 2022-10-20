@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\User;
+
 class FrontController extends Controller
 {
     public function home()
     {
+        $users = User::where('created_at', '<=', now())->get();
+        $categories = Category::all();
+
         return view('home', [
             'page_name' => 'Home Page',
             'name' => 'Laravel 9 Course',
+            'users' => $users,
+            'categories' => $categories,
         ]);
     }
 
