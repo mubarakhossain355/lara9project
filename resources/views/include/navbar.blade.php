@@ -28,7 +28,7 @@
                         <li><a class="dropdown-item" href="{{ route('category.create') }}">Create Category</a></li>
                         <li><a class="dropdown-item" href="{{ route('sub-category.create') }}">Create Sub Category</a>
                         </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li><a class="dropdown-item" href="{{ route('sub-category.index') }}">Sub Category List</a></li>
                     </ul>
                 </li>
 

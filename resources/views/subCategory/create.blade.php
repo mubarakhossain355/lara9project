@@ -3,7 +3,9 @@
 
 @section('content')
     <div class="row">
-
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('sub-category.index') }}" class="btn btn-sm btn-info"> Sub Category Index</a>
+        </div>
         <div class="col-6 m-auto my-3">
             <div class="card p-4">
                 <form action="{{ route('sub-category.store') }}" method="POST">
