@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\UserInfoController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,3 +26,4 @@ Route::get('/send-me-details', UserInfoController::class);
 
 Route::resource('/posts', PostController::class);
 Route::resource('/category', CategoryController::class);
+Route::resource('/sub-category', SubCategoryController::class);

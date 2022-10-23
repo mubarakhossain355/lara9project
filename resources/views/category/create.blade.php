@@ -1,14 +1,9 @@
 @extends('master')
-
+@section('title', 'Create-Category-page')
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-6">
-                @if (session('status'))
-                    <div class="bg-success text-white">
-                        {{ session('status') }}
-                    </div>
-                @endif
                 <form action="{{ route('category.store') }}" method="POST">
                     @csrf
                     <div class="mb-3">

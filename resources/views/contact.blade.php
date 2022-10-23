@@ -1,5 +1,5 @@
 @extends('master')
-
+@section('title', 'Contact-page')
 @section('content')
     <h2>{{ $page_name }}</h2>
     {{-- @if ($product_count < 10)
