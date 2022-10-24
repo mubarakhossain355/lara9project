@@ -13,7 +13,8 @@
                         <th scope="col">Id No.</th>
                         <th scope="col">Category ID</th>
                         <th scope="col">Sub Category Name</th>
-                        <th scope="col">Published Date</th>
+                        <th scope="col">Created Date</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,6 +24,10 @@
                             <td>{{ $subcategory->category->name }}</td>
                             <td>{{ $subcategory->name }}</td>
                             <td>{{ $subcategory->created_at->diffForHumans() }}</td>
+                            <td>
+                                <a href="{{ route('sub-category.edit', $subcategory->id) }}" class="btn btn-info">Edit</a>
+                                <a href="{{ route('sub-category.show', $subcategory->id) }}" class="btn btn-primary">View</a>
+                            </td>
                         </tr>
                     @endforeach
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SubCategoryStoreRequest;
+use App\Http\Requests\SubCategoryUpdateRequest;
 use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ class SubCategoryController extends Controller
      */
     public function index()
     {
+
         $subcategories = SubCategory::get(['category_id', 'id', 'name', 'created_at']);
         return view('subCategory.index', compact('subcategories'));
     }
@@ -49,7 +51,7 @@ class SubCategoryController extends Controller
             'is_active' => $request->filled('is_active'),
         ]);
         Session::flash('status', 'Sub Category Successfully Created');
-        return back();
+        return redirect()->route('sub-category.index');
     }
 
     /**
@@ -60,7 +62,8 @@ class SubCategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $subcategory = SubCategory::find($id);
+        return view('subCategory.show', compact('subcategory'));
     }
 
     /**
@@ -71,7 +74,10 @@ class SubCategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $categories = Category::get(['id', 'name']);
+        $subcategory = SubCategory::find($id);
+        return view('subCategory.edit', compact('categories', 'subcategory'));
     }
 
     /**
@@ -81,9 +87,17 @@ class SubCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SubCategoryUpdateRequest $request, $id)
     {
-        //
+        $subcategory = SubCategory::find($id);
+        $subcategory->update([
+            'category_id' => $request->category_id,
+            'name' => $request->subCategory_name,
+            'slug' => Str::slug($request->subCategory_name),
+            'is_active' => $request->filled('is_active'),
+        ]);
+        Session::flash('status', 'Sub Category Successfully Updated');
+        return redirect()->route('sub-category.index');
     }
 
     /**
