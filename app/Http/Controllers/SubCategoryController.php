@@ -108,6 +108,8 @@ class SubCategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        SubCategory::find($id)->delete();
+        Session::flash('status', 'Sub Category Successfully Deleted');
+        return redirect()->route('sub-category.index');
     }
 }

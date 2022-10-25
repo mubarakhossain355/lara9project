@@ -1,35 +1,32 @@
 @extends('master')
-@section('title', 'Sub-Category-list')
+@section('title', 'Category-list')
 
 @section('content')
     <div class="row">
         <div class="d-flex justify-content-end my-4">
-            <a href="{{ route('sub-category.create') }}" class="btn btn-sm btn-success">Create Sub Category</a>
+            <a href="{{ route('category.create') }}" class="btn btn-sm btn-success">Create Category</a>
         </div>
         <div class="col-8 m-auto">
             <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">Id No.</th>
-                        <th scope="col">Category ID</th>
-                        <th scope="col">Sub Category Name</th>
+                        <th scope="col">Category Name</th>
                         <th scope="col">Created Date</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($subcategories as $subcategory)
+                    @foreach ($categories as $category)
                         <tr>
-                            <th scope="row">{{ $subcategory->id }}</th>
-                            <td>{{ $subcategory->category->name }}</td>
-                            <td>{{ $subcategory->name }}</td>
-                            <td>{{ $subcategory->created_at->diffForHumans() }}</td>
+                            <th scope="row">{{ $category->id }}</th>
+                            <td>{{ $category->name }}</td>
+                            <td>{{ $category->created_at->diffForHumans() }}</td>
                             <td>
-                                <a href="{{ route('sub-category.edit', $subcategory->id) }}"
-                                    class="btn btn-sm btn-info">Edit</a>
-                                <a href="{{ route('sub-category.show', $subcategory->id) }}"
+                                <a href="{{ route('category.edit', $category->id) }}" class="btn btn-sm btn-info">Edit</a>
+                                <a href="{{ route('category.show', $category->id) }}"
                                     class="btn btn-sm btn-primary">View</a>
-                                <form action="{{ route('sub-category.destroy', $subcategory->id) }}" method="POST">
+                                <form action="{{ route('category.destroy', $category->id) }}" method="POST">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" class="btn btn-sm btn-danger">Delete</button>

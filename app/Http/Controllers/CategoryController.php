@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryStoreRequest;
+use App\Http\Requests\CategoryUpdateRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -17,7 +18,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::get(['id', 'name', 'created_at']);
+        return view('Category.index', compact('categories'));
     }
 
     /**
@@ -56,7 +58,8 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = Category::find($id);
+        return view('Category.show', compact('category'));
     }
 
     /**
@@ -67,7 +70,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $category = Category::find($id);
+        return view('Category.edit', compact('category'));
     }
 
     /**
@@ -77,9 +82,19 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryUpdateRequest $request, $id)
     {
-        //
+
+        $category = Category::find($id);
+        $category->update([
+
+            'name' => $request->category_name,
+            'slug' => Str::slug($request->category_name),
+            'is_active' => $request->filled('is_active'),
+        ]);
+
+        Session::flash('status', 'Category Successfully Updated');
+        return redirect()->route('category.index');
     }
 
     /**
@@ -90,6 +105,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Category::find($id)->delete();
+        Session::flash('status', 'Category Successfully Deleted');
+        return redirect()->route('category.index');
     }
 }
