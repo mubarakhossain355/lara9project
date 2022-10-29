@@ -12,6 +12,7 @@
                     <tr>
                         <th scope="col">Id No.</th>
                         <th scope="col">Category Name</th>
+                        <th scope="col"># of SubCategory</th>
                         <th scope="col">Created Date</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -21,6 +22,7 @@
                         <tr>
                             <th scope="row">{{ $category->id }}</th>
                             <td>{{ $category->name }}</td>
+                            <td>{{ $category->subcategories_count }}</td>
                             <td>{{ $category->created_at->diffForHumans() }}</td>
                             <td>
                                 <a href="{{ route('category.edit', $category->id) }}" class="btn btn-sm btn-info">Edit</a>
