@@ -11,6 +11,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
+                    <th scope="col">NID Card</th>
                     <th scope="col">Joined date</th>
                     <th scope="col">Mobile Number</th>
                 </tr>
@@ -18,9 +19,10 @@
             <tbody>
                 @foreach ($users as $item)
                     <tr>
-                        <th scope="row">1</th>
+                        <th scope="row">{{ $item->id }}</th>
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->email }}</td>
+                        <td>{{ $item->nidCard->card_number ?? '' }}</td>
                         <td>{{ $item->created_at }}</td>
                         <td>{{ $item->phone }}</td>
                     </tr>
