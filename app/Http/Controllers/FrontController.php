@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\Category;
+use App\Models\Publisher;
 use App\Models\User;
 
 class FrontController extends Controller
@@ -69,6 +71,16 @@ class FrontController extends Controller
         //     'product_count',
         //     'color',
         //      'products'));
+    }
+
+    public function book()
+    {
+        // $books = Book::with(['author', 'publisher', 'bookType'])->get();
+        // return $books;
+        //$publishers = Publisher::all();
+
+        $publishers = Publisher::withCount('books')->get();
+        return $publishers;
     }
 
 }

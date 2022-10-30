@@ -27,3 +27,5 @@ Route::get('/send-me-details', UserInfoController::class);
 Route::resource('/posts', PostController::class);
 Route::resource('/category', CategoryController::class);
 Route::resource('/sub-category', SubCategoryController::class);
+
+Route::get('/book', [FrontController::class, 'book']);

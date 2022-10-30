@@ -21,7 +21,7 @@ class SubCategoryController extends Controller
     {
 
         $subcategories = SubCategory::with('category')->get(['category_id', 'id', 'name', 'created_at']);
-        return $subcategories;
+
         return view('subCategory.index', compact('subcategories'));
     }
 
