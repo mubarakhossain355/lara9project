@@ -26,4 +26,5 @@ class BookFactory extends Factory
             'publishing_year' => $this->faker->year,
         ];
     }
+
 }
