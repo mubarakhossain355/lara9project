@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SubCategoryStoreRequest;
-use App\Http\Requests\SubCategoryUpdateRequest;
 use App\Models\Category;
 use App\Models\SubCategory;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Session;
+use App\Http\Requests\SubCategoryStoreRequest;
+use App\Http\Requests\SubCategoryUpdateRequest;
 
 class SubCategoryController extends Controller
 {
@@ -20,9 +21,10 @@ class SubCategoryController extends Controller
     public function index()
     {
 
-        $subcategories = SubCategory::with('category')->get(['category_id', 'id', 'name', 'created_at']);
+        $subcategories = SubCategory::query()->with('category')->get(['category_id', 'id', 'name', 'created_at']);
+          $deletedsubcategories = SubCategory::query()->onlyTrashed()->with('category')->get(['category_id', 'id', 'name', 'created_at']);
 
-        return view('subCategory.index', compact('subcategories'));
+        return view('subCategory.index', compact('subcategories','deletedsubcategories'));
     }
 
     /**
@@ -111,6 +113,18 @@ class SubCategoryController extends Controller
     {
         SubCategory::find($id)->delete();
         Session::flash('status', 'Sub Category Successfully Deleted');
+        return redirect()->route('sub-category.index');
+    }
+
+    public function restore($subcategory_id){
+        SubCategory::onlyTrashed()->find($subcategory_id)->restore();
+        Toastr::warning('SubCategory Successfully Restore');
+        return redirect()->route('sub-category.index');
+
+    }
+     public function forceDelete($subcategory_id){
+        SubCategory::onlyTrashed()->find($subcategory_id)->forceDelete();
+        Toastr::warning('SubCategory Successfully Permanently!');
         return redirect()->route('sub-category.index');
     }
 }

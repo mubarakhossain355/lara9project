@@ -99,7 +99,8 @@ class CategoryController extends Controller
             'is_active' => $request->filled('is_active'),
         ]);
 
-        Session::flash('status', 'Category Successfully Updated');
+     
+        Toastr::warning('Category Successfully Updated');
         return redirect()->route('category.index');
     }
 
@@ -120,6 +121,12 @@ class CategoryController extends Controller
     public function restore($category_id){
        Category::onlyTrashed()->find($category_id)->restore();
         Toastr::warning('Category Successfully Restore');
+        return redirect()->route('category.index');
+    }
+
+    public function forceDelete($category_id){
+        Category::onlyTrashed()->find($category_id)->forceDelete();
+        Toastr::warning('Category Successfully Permanently!');
         return redirect()->route('category.index');
     }
 }

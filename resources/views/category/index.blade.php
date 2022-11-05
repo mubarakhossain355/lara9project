@@ -69,12 +69,14 @@
                                 <a href="{{ route('category.restore', $category->id) }}"
                                     class="btn btn-sm btn-info">Restore</a>
 
-                                <form action="{{ route('category.destroy', $category->id) }}" method="POST">
+
+                                <form action="{{ route('category.forceDelete', $category->id) }}" method="get">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" class="btn btn-sm btn-danger show_confirm" data-toggle="tooltip"
-                                        title="Delete"> Force Delete</button>
+                                        title="Delete">Force Del</button>
                                 </form>
+
                             </td>
                         </tr>
                     @endforeach
