@@ -19,9 +19,13 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::withCount('subcategories')->get(['id', 'name', 'created_at']);
-        return view('Category.index', compact('categories'));
+        $categories = Category::query()->withCount('subcategories')->get(['id', 'name', 'created_at']);
+       
+        $deletedcategories = Category::query()->onlyTrashed()->withCount('subcategories')->get(['id', 'name', 'created_at']);
+        return view('Category.index', compact('categories','deletedcategories'));
     }
+
+    
 
     /**
      * Show the form for creating a new resource.
@@ -110,6 +114,12 @@ class CategoryController extends Controller
         Category::find($id)->delete();
         //Session::flash('status', 'Category Successfully Deleted');
         Toastr::warning('Category Successfully Deleted');
+        return redirect()->route('category.index');
+    }
+
+    public function restore($category_id){
+       Category::onlyTrashed()->find($category_id)->restore();
+        Toastr::warning('Category Successfully Restore');
         return redirect()->route('category.index');
     }
 }
