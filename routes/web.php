@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\FrontController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\SubCategoryController;
-use App\Http\Controllers\UserInfoController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\FrontController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UserInfoController;
+use App\Http\Controllers\SubCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,4 @@ Route::resource('/sub-category', SubCategoryController::class);
 Route::get('/subcategory/{subcategory}/restore', [SubCategoryController::class, 'restore'])->name('sub-category.restore');
 Route::get('/subcategory/{subcategory}/forceDelete', [SubCategoryController::class, 'forceDelete'])->name('sub-category.forceDelete');
 Route::get('/book', [FrontController::class, 'book']);
+Route::resource('/products', ProductController::class);

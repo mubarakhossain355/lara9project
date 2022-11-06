@@ -85,7 +85,7 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </div> 
 @endsection
 
 @push('admin_stack')

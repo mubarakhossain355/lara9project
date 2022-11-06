@@ -19,9 +19,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::query()->withCount('subcategories')->get(['id', 'name', 'created_at']);
+         $categories = Category::query()->withCount('subcategories')->get(['id', 'name', 'created_at']);
        
-        $deletedcategories = Category::query()->onlyTrashed()->withCount('subcategories')->get(['id', 'name', 'created_at']);
+         $deletedcategories = Category::query()->onlyTrashed()->withCount('subcategories')->get(['id', 'name', 'created_at']);
+       
+
         return view('Category.index', compact('categories','deletedcategories'));
     }
 
