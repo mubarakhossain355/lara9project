@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Image;
+use App\Models\Product;
 use App\Models\Category;
 use App\Models\SubCategory;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ProductStoreRequest;
 
@@ -41,19 +45,67 @@ class ProductController extends Controller
      */
     public function store(ProductStoreRequest $request)
     {
-        $file_exists = $request->hasFile('image');
 
-        if ($file_exists) {
-            $file = $request->file('image');
-            $file_type = $file->getClientMimeType();
-            $file_ext = $file->getClientOriginalExtension();
-            $file_org_name = $file->getClientOriginalName();
+        //dd($request->all());
+        // $file_exists = $request->hasFile('image');
+
+        // if ($file_exists) {
+        //     $file = $request->file('image');
+        //     $file_type = $file->getClientMimeType();
+        //     $file_ext = $file->getClientOriginalExtension();
+        //     $file_org_name = $file->getClientOriginalName();
             
            // dump($file->store('image'));
             //dump(Storage::disk('public')->put('image', $file));
-            dump(Storage::putFileAs('product_image',$file,'new_product_1'.'.'. $file->getClientOriginalExtension()));
-        }
+            //dump(Storage::putFileAs('product_image',$file,'new_product_1'.'.'. $file->getClientOriginalExtension()));
+
+            // $product_image1 = $file->storeAs('product_image',$file,'new_product_1'.'.'. $file->getClientOriginalExtension());
+            // dd(Storage::url($product_image1));
+    
+       
+        $product = Product::create([
+            'category_id' =>$request->category_id,
+            'subcategory_id' =>$request->subcategory_id,
+            'name' => $request->name,
+            'slug' =>Str::slug($request->name),
+            'price' =>$request->price,
+            'description' =>$request->description,
+
+        ]);
+        $this->image_upload($request,$product->id);
+          Toastr::success('Product Successfully Created');
+
+            return back();
+
     }
+
+    public function image_upload($request, $product_id){
+
+        if($request->hasfile('image')){
+            //photo location
+            $photo_location = 'public/uploads/product_image/';
+            $uploaded_photo = $request->file('image');
+            $photo_name = $product_id.'.'.$uploaded_photo->getClientOriginalExtension();
+            $new_photo_location = $photo_location.$photo_name;
+
+            Image::make($uploaded_photo)->resize(600,600)->save(base_path($new_photo_location));
+
+            // Image field Update
+
+            $product = Product::find($product_id);
+            $product->update([
+                'image' => $photo_name,
+            ]);
+           
+            return back();
+
+        }else{
+            
+            return back();
+        }
+
+    }
+    
 
     /**
      * Display the specified resource.
