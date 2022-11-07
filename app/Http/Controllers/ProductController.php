@@ -9,6 +9,7 @@ use App\Models\SubCategory;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ProductStoreRequest;
 
@@ -21,7 +22,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-       
+        $products = Product::query()->with(['category','subcategory'])->get();
+        return view('products.index', compact('products',));
     }
 
     /**
@@ -126,7 +128,12 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+
+       $categories = Category::select(['id','name'])->get();
+        $subcategories = SubCategory::select(['id','name'])->get();
+        $product = Product::find($id);
+        
+         return view('products.edit', compact('categories','subcategories','product'));
     }
 
     /**
@@ -149,6 +156,8 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Product::find($id)->delete();
+        Session::flash('status', 'Product Successfully Deleted');
+        return redirect()->route('products.index');
     }
 }

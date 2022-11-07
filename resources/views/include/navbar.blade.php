@@ -19,20 +19,16 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('contact') }}">Contact</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('category.create') }}"> Create Category</a>
-                </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('category.index') }}">Category List</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('sub-category.create') }}">Create Sub Category</a>
-                </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('sub-category.index') }}">Sub Category List</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('products.create') }}">Create Products</a>
+                    <a class="nav-link" href="{{ route('products.index') }}">Products List</a>
                 </li>
 
             </ul>

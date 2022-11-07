@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Category;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Mail\CategoryCreated;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests\CategoryStoreRequest;
 use App\Http\Requests\CategoryUpdateRequest;
-use App\Models\Category;
-use Brian2694\Toastr\Facades\Toastr;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -48,12 +51,18 @@ class CategoryController extends Controller
     public function store(CategoryStoreRequest $request)
     {
 
-        Category::create([
+       $category= Category::create([
             'name' => $request->category_name,
             'slug' => Str::slug($request->category_name),
             'is_active' => $request->filled('is_active'),
         ]);
         // Session::flash('status', 'Category Successfully Created');
+        // Mail send Command
+
+        $user = User::find(1);
+        Mail::to($user)->send(
+            new CategoryCreated($category)
+        );
         Toastr::success('Category Successfully Created');
         return back();
     }

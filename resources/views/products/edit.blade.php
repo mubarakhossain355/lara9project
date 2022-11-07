@@ -1,5 +1,5 @@
 @extends('master')
-@section('title', 'Create Products')
+@section('title', 'Edit Products')
 
 @section('content')
 
@@ -11,15 +11,16 @@
             <div class="card">
                 <h2 class="card-title p-3">Products Form</h2>
                 <div class="card-body">
-                    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
-
+                    <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+                        @method('PUT')
                         @csrf
                         <div class="mb-3">
                             <label for="" class="form-label"> Select Category Name</label>
                             <select class="form-select" name="category_id">
                                 <option selected>Open this select menu</option>
                                 @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    <option value="{{ $category->id }}" @if ($category->id == $product->category_id) selected @endif>
+                                        {{ $category->name }}</option>
                                 @endforeach
 
                             </select>
@@ -29,29 +30,32 @@
                             <select class="form-select" name="subcategory_id">
                                 <option selected>Open this select menu</option>
                                 @foreach ($subcategories as $subcategory)
-                                    <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
+                                    <option value="{{ $subcategory->id }}"
+                                        @if ($subcategory->id == $product->subcategory_id) selected @endif>{{ $subcategory->name }}</option>
                                 @endforeach
 
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Products Name</label>
-                            <input type="text" class="form-control" name="name">
+                            <input type="text" class="form-control"value="{{ $product->name }}" name="name">
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Products Price</label>
-                            <input type="number" class="form-control" name="price" min="0">
+                            <input type="number" class="form-control" name="price" value="{{ $product->price }}"
+                                min="0">
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Products Description</label>
-                            <textarea name="description" id="" cols="30" rows="10" class="form-control"></textarea>
+                            <textarea name="description" id="" cols="30" rows="10" value="{{ $product->description }}"
+                                class="form-control"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Products Image</label>
                             <input type="file" class="form-control" name="image">
                         </div>
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-success">Add New Products</button>
+                            <button type="submit" class="btn btn-success">Update Products</button>
                         </div>
                     </form>
                 </div>
