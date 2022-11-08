@@ -31,6 +31,9 @@ class CategoryCreateMarkdown extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.category.create');
+        $subject ="A new Cateory Created By name {$this->category->name} ";
+        return $this->
+        subject($subject)
+        ->markdown('emails.category.create');
     }
 }
