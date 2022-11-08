@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\FrontController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserInfoController;
 use App\Http\Controllers\SubCategoryController;
+use App\Mail\CategoryCreateMarkdown;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +36,9 @@ Route::get('/subcategory/{subcategory}/restore', [SubCategoryController::class, 
 Route::get('/subcategory/{subcategory}/forceDelete', [SubCategoryController::class, 'forceDelete'])->name('sub-category.forceDelete');
 Route::get('/book', [FrontController::class, 'book']);
 Route::resource('/products', ProductController::class);
+
+Route::get('mail/preview',function(){
+$category = Category::find(1);
+return new CategoryCreateMarkdown($category);
+
+});

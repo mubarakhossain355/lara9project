@@ -12,7 +12,7 @@
     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore dolores, iste ut necessitatibus obcaecati consectetur
     repudiandae facere nam voluptatum eos minus accusantium blanditiis doloribus, laboriosam illo esse corporis harum. Vel.
 
-    @component('mail::button', ['url' => route('category.show', $category->id)])
+    @component('mail::button', ['url' => route('category.show', $category->id), 'color' => 'success'])
         Add new Category
     @endcomponent
 
