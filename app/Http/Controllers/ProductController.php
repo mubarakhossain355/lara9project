@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Image;
+use App\Models\User;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Support\Str;
+use App\Mail\ProductCreated;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ProductStoreRequest;
@@ -75,6 +78,13 @@ class ProductController extends Controller
 
         ]);
         $this->image_upload($request,$product->id);
+
+        // mail send
+        $user = User::find(1);
+        $updated_product = Product::find($product->id);
+        Mail::to($user)->send(
+            new ProductCreated($updated_product)
+        );
           Toastr::success('Product Successfully Created');
 
             return back();

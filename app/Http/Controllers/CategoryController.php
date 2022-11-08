@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\CategoryCreated;
+use App\Mail\CategoryCreateMarkdown;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -61,7 +62,7 @@ class CategoryController extends Controller
 
         $user = User::find(1);
         Mail::to($user)->send(
-            new CategoryCreated($category)
+            new CategoryCreateMarkdown($category)
         );
         Toastr::success('Category Successfully Created');
         return back();
